@@ -1,0 +1,11 @@
+REMOTE
+******************
+- after PUSH to remote server, git creates another branch origin/master that mimic what is on the remote server
+- FETCH -> fetch to origin/master, does not bring into our master branch until a MERGE
+ 	
+- upload to remote server
+ 	git remote add origin https://github.com/garytam/technicalNotes.git  --> onlyh need the first time ?
+	git push -u origin master
+	
+- 
+

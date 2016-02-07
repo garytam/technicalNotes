@@ -235,13 +235,41 @@ tracking empty directory
 
 
   
+commit tree
+********************  
+- referencing commit
+  - tree-ish
+  		- full SHA-1 harsh 
+  		- short SHA-1
+  			- at least 4 characters
+  		- HEAD
+  		- branch reference
+  		- ancestry
+  		
+- git ls-tree tree-ish
 
-REMOTE
-******************
-- after PUSH to remote server, git creates another branch origin/master that mimic what is on the remote server
-- FETCH -> fetch to origin/master, does not bring into our master branch until a MERGE
-- 
 
+
+
+
+
+
+
+
+
+
+  
+  
+Branching
+********************
+
+  
+  
+  
+  
+  
+  
+  
 
 
 
@@ -290,7 +318,3 @@ REMOTE
 	
 	
 	
-	
-	
-********************************************************************
-github token a01a56c8ecf3cddadf7d4e8aa1567ff97cd62d7a
