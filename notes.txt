@@ -247,11 +247,30 @@ commit tree
   		- ancestry
   		
 - git ls-tree tree-ish
+  - will return list of object in that tree-ish(uuid)
+  - git ls-tree 4ca03519fb8bf2bdacda3cd5f0cc80ec9a344c1f
+  - git ls-tree HEAD
+  - git ls-tree master
+  - git ls-tree master dir/
+  
+-git log --oneline
+
+- git log --oneline -3 (last 3 commits)
+
+- git log --since="2016-12-31"
+- git log --until="3 days ago"
+- git log --author="gaga"
+- git log --grep="initial"
+- git log from_uuid..to_uuid  
+- git log from_uuid.. filename -> show all changes to file since from_uuid
+- git log -p tree-ish filename (shows what exactly happen to the file)
+- git log -p filename
+- git log --stat --summary
+- git log --graph
+- git log --oneline --graph --all --decorate
 
 
-
-
-
+- git show --uuid
 
 
 
@@ -263,8 +282,122 @@ commit tree
 Branching
 ********************
 
+create branch
+***************
+- git branch newBranchName
+
+- git branch -b newBranch
+  create branch and switch to ti
   
+ 
+ 
+- git branch
+	- list all the branches
+	- * besides the current branch
+	
+- git branch brachName 
+  ls -la .git/refs/heads will show the new branch directory
+
+switch branch
+********************
+- only if branch are mostly clean. new file is okay, but not uncommitted tracked file
+- git checkout branchName -> switch to branch branchName
+
+compare branchs
+********************
+- git diff --color-words branch1..branch2
+
+- git branch --merged
+  will tell if the branch is entirly contain by another branch
+  =need to investigate more
   
+rename branch
+*****************
+ - git branch --move/-m orig_branch_name new_branch_name
+
+delete branch
+******************
+- git branch --delete/-d branch_name
+- git will safe check
+	- cannot delete branch you are currently on
+	- cannot delete if not merged to other branch. Must use '-D' to force delete
+	
+to change command prompt for git
+********************************
+mac/linux
+	- needs the git completion script
+	- prompt stores in PS1, can echo $PS1
+	- export PS1='>>>>>'
+	- export PS1='\W$(__git_ps1 "(%s)") > '
+
+windows
+	- 
+
+
+****************************************************************************
+
+merge branch
+**************
+- checkout the receiving branch
+- from the receving branch issue the merge command
+	- git merge from_branch
+
+fast-forward merge vs true merge
+*********************************
+- fast-forward is when the receiving branch has not make any commit since branch.
+  git just move the HEAD pointer to the branched uuid
+- git merge -no-ff branch
+	- this will cause git to do a true merge and commit thus having a log info to indicated a merge happened
+- git merge --ff-only-barnch 
+   - only do it if it can be done by fast forward
+   
+true merge
+**********
+- same command
+	- git merge from_branch_name
+
+
+
+merge conflict
+***************
+
+3 choice
+ 1 - abort
+ 		- git merge --abort
+ 2 - resolve manually
+ 		- manually resovle it
+ 		- git add file
+ 		- git commit 
+ 3 - use a merge tool
+ 	  get a list of merge tool
+ 	  - git mergetool
+ 
+- git branch --merged 
+  to show the merge
+  
+- 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+- stash the changes
+  - 
+
+
   
   
   
