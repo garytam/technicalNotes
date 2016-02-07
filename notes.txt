@@ -1,0 +1,296 @@
+Git configuration
+		System level - default
+								 - /etc/gitconfig
+								 - git config --system
+								 
+		User level - apply to a single user
+								 - ~/.gitconfig
+								 - git config --global
+								 - $HOME\.gitconfig --> c:/user/gary tam/.gitconfig
+								 
+		Project level -my_project/.git/config
+		              - git config
+		              
+		              
+		- git config --global user.name "Gary Tam"
+		  git config --global user.email "gary.c.tam@gmail.com"
+		  git config --list
+		  git config user.name
+		  
+		  (not work) git config --global core.editor "C:\Program Files (x86)\Notepad++\notepad++.exe"
+		  (need 64 bit notepad++) git config --global core.editor "'C:/Program Files/Notepad++/notepad++.exe' -multiInst -notabbar -nosession -noPlugin"
+		  (works on 64 bit windows and 32 bit notepad++) git config --global core.editor "'C:/Program Files (x86)/Notepad++/notepad++.exe' -multiInst -notabbar -nosession -noPlugin"
+		  
+		  git config --global color.ui true
+		  
+- initializing
+	- git init
+
+- git status
+- git add filename ....
+  git add . (all files in current directory)
+  
+- git commit -m "comment"
+  git commit
+  
+- git diff
+	- https://coderwall.com/p/76wmzq/winmerge-as-git-difftool-on-windows
+	- edit .gitconfig
+	  add following lines
+	  
+						[diff]
+					    tool = winmerge
+					  [difftool "winmerge"]
+					    cmd = "'C:/Program Files (x86)/WinMerge/WinMergeU.exe'" -e "$LOCAL" "$REMOTE"
+		git difftool HEAD HEAD~1
+		git difftool filename
+		
+- git diff filename
+
+- git -a commit ( this will also stage the file before commit)
+
+- git log
+
+- git show UID (of the committed version)
+
+- ignore files
+  - add file to .gitignore
+  - sample
+    	
+    	configuration/
+			some_file.m
+			*.exe
+			
+	- 
+	
+- when commit, git creates a checksum for each change set
+  - a change set is all files that got committed together
+  - uses SHA-1 hash algorithm to generate the checksum number
+  - git uses the checksum to link between version
+  - 
+  
+HEAD pointer 
+	- points to "tip" of current branch in repository
+	- last state of repository
+	- Gary's interpertation - points to the latest version of file
+	- default branch is master
+	- jit log head 
+	
+	
+git diff on staging index
+**************************
+
+git difftool --staged filename
+git diff --staged filename
+
+
+delete file
+****************
+after physical delete file
+git add -all delete_1.txt
+	
+git rm delete_1.txt
+	
+move/rename file
+********************
+- physical rename file from originalFile to newNameFile
+- git add newNameFile
+- git rm originalFile
+- git will compare the file and notice a rename
+
+- git mv file2.txt to newFile2.txt
+- git mv file3.txt other_direcotry/file3a.txt
+
+undo changes
+***************************
+git checkout -- filename        (-- current brench)
+
+checkout also work with brench
+
+to unstage
+*******************************
+git reset HEAD <file>
+
+
+
+amending commit - add artfact to last commit
+*****************************************************
+- can only change the last commit => point to by HEAD
+- this is to add additional artifact to the latest commit
+- git commit --amend -m "msg"
+
+
+get previous version
+*******************************
+- need the first 10-15 characters of UUID
+- git checkout uuid -- filename  ( -- current branch)
+- will put into staging area
+- git diff --staged
+- git reset HEAD filename (put it back into working directory)
+
+
+undo last commit
+***************************************
+- git revert uuid
+
+- will be doing a merge when the revert is complicated
+
+
+	
+undo multi commit
+**************************
+- reset, change where HEAD pointer location
+- soft
+	- does not change staging index or working directory
+	- git reset --soft uuid
+	   
+	   
+	    	c:\data\git\explore_california>git log
+			commit 4ea25988d0871fe73759e2275568b2082f0cd1af
+			Author: Gary Tam <gary.cm.tam@gmail.com>
+			Date:   Sat Feb 6 16:14:55 2016 -0500
+			
+			    V2
+			
+			commit 3a97a6ba62a975659ec1847f7d48ca154dd2ae39
+			Author: Gary Tam <gary.cm.tam@gmail.com>
+			Date:   Sat Feb 6 16:13:39 2016 -0500
+			
+			    V1
+    
+    after soft reset, the HEAD will point to 3a97a6ba62a975659ec1847f7d48ca154dd2ae39
+    
+    no change to the file on working directory
+    
+    doing a git log after, it will show 3a97a6ba62a975659ec1847f7d48ca154dd2ae39 and 
+    4ea25988d0871fe73759e2275568b2082f0cd1af will be gone.
+    
+    But the file will be in staging area waiting to be commit
+    
+    
+	
+- mix (default)
+	- changes staging index to match repository
+	- does not change working directory
+	- same as soft except it makes the staging files same as repository
+	
+	  after reset file becomes un-staged
+	  file in working directory does not change
+	
+	
+- hard 
+	- move the pointer
+	- change the staging and working directory to match repository
+	
+	- makes the file in working directory same as repository.  This is to lose the changes already check-in
+	
+ 	
+- to confirm the HEAD UUID
+	 type .git\HEAD
+	 -> ref: refs\head\master
+	 
+	 type refs\heads\master
+	 -> 4ea25988d0871fe73759e2275568b2082f0cd1af
+	 
+	 
+- remove untrack file
+	- git clean -n (test run) - tells us what file to remove
+	- git clean -f (for real) - remove file not in repository nor staged
+	- 
+
+Ignore files
+******************
+- *** will not ignore files already tracked ****
+
+- create .gitignore on the root of project
+- can be file name or regular express
+		* ? [aeiou] [0-9]
+- also allow negate expression with "!"
+	*.php -> php will be ignore
+	!index.php -> index.php will be traked
+	
+- ignore direcotry by adding a tailing slash
+	 assets/videos/  -> directory videos will be ignore
+	 
+- comment are #
+
+globally ignoring files
+***********************
+
+- ignore files in all repositories
+- configuration sitting outside of the repository/git
+- git config --global core.excludesfile ~/.gitignore_global
+
+
+ignore tracked files
+*********************
+- git rm --cached filename
+  remove from staging index - will cause the file to be untrack
+  git commit -m "remove filename from staging index"
+  
+tracking empty directory
+*************************
+- by default git ignores empty directory
+- create a dummy file .gitkeep to force git tracking this directory
+
+
+  
+
+REMOTE
+******************
+- after PUSH to remote server, git creates another branch origin/master that mimic what is on the remote server
+- FETCH -> fetch to origin/master, does not bring into our master branch until a MERGE
+- 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+	
+	
+	
+	
+	
+********************************************************************
+github token a01a56c8ecf3cddadf7d4e8aa1567ff97cd62d7a
