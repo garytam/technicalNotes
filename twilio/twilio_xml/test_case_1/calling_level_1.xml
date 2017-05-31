@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Response>
+    <Say voice="alice">It is a wonderful day from Twilio, Enjoy your day</Say>
+    <Say>It is Wednesday May 31</Say>
+    <Gather input="speech dtmf" timeout="5" numDigits="1" action="/process_gather" method="GET">
+        <Say>Please press 1 to confirmed appointment</Say>
+        <Say>press 2 to cancel appointment</Say>
+        <Say>press 3 to speak to the oncall nurse</Say>
+        <Say>press 4 to repeat option</Say>
+    </Gather>
+    <Say>You did not do your bit</Say>
+</Response>

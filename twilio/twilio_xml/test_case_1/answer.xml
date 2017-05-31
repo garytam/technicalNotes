@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Response>
+	<Pause until='silence' length='2'/>
+	<Play digits="ww1"></Play>
+	<Pause until='silence' length='2'/>
+	<Play digits="ww3"></Play>
+</Response>

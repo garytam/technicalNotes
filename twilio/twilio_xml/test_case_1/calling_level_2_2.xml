@@ -1,0 +1,9 @@
+<Response>
+<Say voice="alice">Who are you confirming for ?</Say>
+<Gather input="speech dtmf" timeout="5" numDigits="1" action="/process_gather_level_2" method="GET">
+    <Say>Please press 1 to confirm for yourself</Say>
+    <Say>press 2 to confirm for family</Say>
+    <Say>press 3 to confirm for everyone</Say>
+</Gather> 
+<Say>You did not do your bit</Say>
+</Response>
